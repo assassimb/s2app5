@@ -1,3 +1,13 @@
+import math
+import argparse
+import glob
+import sys
+import os
+from pathlib import Path
+from random import randint
+from random import choice
+
+
 Dict = {}
 i = 0
 
@@ -29,7 +39,7 @@ data = fp.read()
 words = data.split()
 fp.close()
 
-unwanted_chars = ".,-_ (and so on)"
+unwanted_chars = "!)(,.;:?-_"
 wordfreq = {}
 for raw_word in words:
     word = raw_word.strip(unwanted_chars)
@@ -37,4 +47,5 @@ for raw_word in words:
         wordfreq[word] = 0 
     wordfreq[word] += 1
 
+print("Frequence par mots : ")
 print(wordfreq)
