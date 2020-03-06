@@ -14,19 +14,19 @@ i = 0
 with open('test.txt','r') as f:
     for line in f:
         for word in line.split():
+            #Dict[word][i] += 1
             Dict[i] = word
             i = i + 1
 f.close()
-
-def wordListToFreqDict(wordlist):
-    wordfreq = [wordlist.count(p) for p in wordlist]
-    return dict(list(zip(wordlist,wordfreq)))
 
 def sortFreqDict(freqdict):
     aux = [(freqdict[key], key) for key in freqdict]
     aux.sort()
     aux.reverse()
     return aux
+
+#def getPlusfrequent(freqdict):
+    
 
 print("Dictionnaire : ") 
 print(Dict) 
@@ -49,3 +49,4 @@ for raw_word in words:
 
 print("Frequence par mots : ")
 print(wordfreq)
+print(sortFreqDict(wordfreq))
