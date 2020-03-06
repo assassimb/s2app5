@@ -51,6 +51,8 @@ import argparse
 import glob
 import sys
 import os
+
+from dictionnaire import *
 from pathlib import Path
 from random import randint
 from random import choice
@@ -129,3 +131,8 @@ if __name__ == "__main__":
             print("    " + aut[-1])
 
 ### Ã€ partir d'ici, vous devriez inclure les appels Ã  votre code
+#
+# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants\ -a test.txt -m 1
+#
+
+printDict(ouvrirFichier(args.a))
