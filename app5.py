@@ -85,6 +85,7 @@ if __name__ == "__main__":
     ### Lecture du rÃ©pertoire des auteurs, obtenir la liste des auteurs
     ### Note:  args.d est obligatoire
     ### auteurs devrait comprendre la liste des rÃ©pertoires d'auteurs, peu importe le systÃ¨me d'exploitation
+    
     cwd = os.getcwd()
     if os.path.isabs(args.d):
         rep_aut = args.d

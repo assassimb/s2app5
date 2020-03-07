@@ -31,7 +31,7 @@ def printDict(stringEntree):
     wordfreq = {}
     i = 0
 
-    f = open(stringEntree,'r')
+    f = open(stringEntree,'r', encoding="utf8")
     for line in f:
         for word in line.split():
             dictionnaire[i] = word
@@ -41,7 +41,7 @@ def printDict(stringEntree):
     print("Dictionnaire : ")    
     print(dictionnaire) 
 
-    f = open(stringEntree, 'r')
+    f = open(stringEntree, 'r', encoding="utf8")
     data = f.read()
     words = data.split()
     f.close()
