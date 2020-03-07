@@ -132,7 +132,8 @@ if __name__ == "__main__":
 
 ### Ã€ partir d'ici, vous devriez inclure les appels Ã  votre code
 #
-# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants\ -a test.txt -m 1
+# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants\Voltaire\ -a '.\TextesPourEtudiants\Voltaire\Voltaire - Candide.txt' -m 1 -P
+# on peut aussi changer le -a pour autre chose pi on s'en caliss du -d et -m live ils font rien dans le code
 #
 
-printDict(ouvrirFichier(args.a))
+printDict(args.a)

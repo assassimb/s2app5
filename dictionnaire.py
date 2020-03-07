@@ -25,17 +25,29 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
-def printDict(Dict):
-    print("Dictionnaire : ") 
-    print(Dict) 
+def printDict(stringEntree):
 
-    fp = open('test.txt')
-    data = fp.read()
+    dictionnaire = {}
+    wordfreq = {}
+    i = 0
+
+    f = open(stringEntree,'r')
+    for line in f:
+        for word in line.split():
+            dictionnaire[i] = word
+            i = i + 1
+    f.close()
+
+    print("Dictionnaire : ")    
+    print(dictionnaire) 
+
+    f = open(stringEntree, 'r')
+    data = f.read()
     words = data.split()
-    fp.close()
+    f.close()
 
     unwanted_chars = "!)(,.;:?-_"
-    wordfreq = {}
+    
     for raw_word in words:
         word = raw_word.strip(unwanted_chars)
         if word not in wordfreq:
