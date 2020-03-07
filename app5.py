@@ -57,6 +57,7 @@ from pathlib import Path
 from random import randint
 from random import choice
 
+
 ### Ajouter ici les signes de ponctuation Ã  retirer
 PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_"]
 
@@ -87,13 +88,18 @@ if __name__ == "__main__":
     ### auteurs devrait comprendre la liste des rÃ©pertoires d'auteurs, peu importe le systÃ¨me d'exploitation
     
     cwd = os.getcwd()
-    if os.path.isabs(args.d):
-        rep_aut = args.d
+    rep_aut = os.path.join(cwd, args.d)
+    
+    if os.path.isabs(args.a):
+        rep_aut = args.a
     else:
-        rep_aut = os.path.join(cwd, args.d)
-
+        rep_aut = os.path.join(rep_aut, args.a)
+        
     rep_aut = os.path.normpath(rep_aut)
+    
     authors = os.listdir(rep_aut)
+    
+    print("Fichiers textes a analyser", authors)
 
     ### Enlever les signes de ponctuation (ou non) - DÃ©finis dans la liste PONC
     if args.P:
@@ -133,8 +139,19 @@ if __name__ == "__main__":
 
 ### Ã€ partir d'ici, vous devriez inclure les appels Ã  votre code
 #
-# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants\Voltaire\ -a '.\TextesPourEtudiants\Voltaire\Voltaire - Candide.txt' -m 1 -P
+# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants -a Voltaire -m 1
 # on peut aussi changer le -a pour autre chose pi on s'en caliss du -d et -m live ils font rien dans le code
 #
 
-printDict(args.a)
+dictionnaire = dict()
+wordfreq = dict()
+wordfreqtemp = dict()
+listeDeDict = []
+
+
+if args.m is 1:
+    for i in range(len(authors)):
+        listeDeDict.append(printDict(rep_aut + "\\" + authors[i], dictionnaire, wordfreq))
+        print("LONGEUR DE LA LISTE : ", len(listeDeDict))
+    print(listeDeDict)
+        

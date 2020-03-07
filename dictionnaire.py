@@ -25,10 +25,8 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
-def printDict(stringEntree):
-
-    dictionnaire = dict()
-    wordfreq = dict()
+def printDict(stringEntree, dictionnaire, wordfreq):
+    
     i = 0
     j = 0
 
@@ -37,13 +35,12 @@ def printDict(stringEntree):
         for word in line.split():
             dictionnaire[i] = word
             i = i + 1
-            nombredemotspartexte = i
     f.close()
 
-    totalfreq = nombredemotspartexte
+    totalfreq = len(dictionnaire)
 
     print("Dictionnaire : ")    
-    print(dictionnaire) 
+    print(len(dictionnaire)) 
 
     f = open(stringEntree, 'r', encoding="utf8")
     data = f.read()
@@ -58,13 +55,13 @@ def printDict(stringEntree):
             wordfreq[word] = 0 
         wordfreq[word] += 1         # wordfreq[word] ++ (le mot donne la position) wordfreq['yo'] nous donne la frequence 6
     
-    pourcfreq = []
+    # pourcfreq = []
 
-    for j in wordfreq:
-        pourcfreq = ((wordfreq['yo'] * 100 ) / totalfreq)       # trouver une facon de passer au prochain mot dans le dictionnaire
-        #j = j + 1
+    # for j in wordfreq:
+    #     pourcfreq = ((wordfreq['yo'] * 100 ) / totalfreq)       # trouver une facon de passer au prochain mot dans le dictionnaire
+    #     #j = j + 1
     
-    print(pourcfreq)
+    # print(pourcfreq)
     print("Frequence par mots : ")
-    print(wordfreq)
-    print(sortFreqDict(wordfreq))
+    print(len(sortFreqDict(wordfreq)))
+    return sortFreqDict(wordfreq)
