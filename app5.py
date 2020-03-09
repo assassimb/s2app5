@@ -149,11 +149,16 @@ listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à 
 listeDeMotsFrequents = []
 
 
-if args.m is 1:
+if args.m == 1:
     for i in range(len(authors)):
-        listeDeDict.append(printDict(rep_aut + "\\" + authors[i], dictionnaire, wordfreq))
+        
+        listeDeDict.append(
+            modeUnigramme(
+                lireFichier(rep_aut + "\\" + authors[i], args.P, PONC),
+                            dictionnaire, wordfreq))
+        
         print("LONGEUR DE LA LISTE : ", len(listeDeDict))
         
     print(listeDeDict[0].pop(1))
-    print(listeDeDict[0].pop(2))
+    print(listeDeDict[0].pop(1))
     print(listeDeDict[1].pop(1))
