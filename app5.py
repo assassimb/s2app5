@@ -155,5 +155,5 @@ if args.m is 1:
         print("LONGEUR DE LA LISTE : ", len(listeDeDict))
         
     print(listeDeDict[0].pop(1))
-    print(listeDeDict[0].pop(2))
     print(listeDeDict[1].pop(1))
+    print(listeDeDict[2].pop(1))

@@ -10,13 +10,14 @@ from random import choice
 def ouvrirFichier(stringEntree):
     Dict = {}
     i = 0
-
-    with open(stringEntree,'r') as f:
-        for line in f:
+    for fil in os.listdir(stringEntree):
+        f = open(stringEntree + fil, 'r', encoding = "utf8")
+        for line in stringEntree:
             for word in line.split():
                 Dict[i] = word
                 i = i + 1
     f.close()
+    #print(Dict)
     return Dict
 
 def sortFreqDict(freqdict):
@@ -25,17 +26,34 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
+def unwanted_chars(liste):
+    PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_","—"]
+    RetourListe = []
+    NewListe = liste.split()
+    for word in NewListe:
+        for signe in PONC:
+            word = word.replace(signe, " ")
+        word = word.replace("\n", " ")
+        word = word.lstrip()
+        word = word.rstrip()
+    if len(word) > 2:
+        RetourListe.append(word)
+    print(RetourListe)
+    return RetourListe 
+
 def printDict(stringEntree, dictionnaire, wordfreq):
     
     i = 0
     j = 0
 
-    f = open(stringEntree,'r', encoding="utf8")
-    for line in f:
-        for word in line.split():
-            dictionnaire[i] = word
-            i = i + 1
-    f.close()
+    # f = open(stringEntree,'r', encoding="utf8")
+    # for line in f:
+    #     for word in line.split():
+    #         dictionnaire[i] = word
+    #         i = i + 1
+    # f.close()
+
+    dictionnaire = ouvrirFichier(stringEntree)
 
     totalfreq = len(dictionnaire)
 
@@ -65,3 +83,12 @@ def printDict(stringEntree, dictionnaire, wordfreq):
     print("Frequence par mots : ")
     print(len(sortFreqDict(wordfreq)))
     return sortFreqDict(wordfreq)
+
+def Comparer(self, path, mode):
+
+    temp = []
+    f = open(path, 'r', encoding = ("utf8"))
+    for lines in f:
+        temp = self.unwanted_chars(lines)
+        #if mode == 2:
+        
