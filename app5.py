@@ -143,17 +143,27 @@ if __name__ == "__main__":
 # on peut aussi changer le -a pour autre chose pi on s'en caliss du -d et -m live ils font rien dans le code
 #
 
-dictionnaire = dict()
-wordfreq = dict()
-listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à ceux les moins fréquents dans un dict()
-listeDeMotsFrequents = []
+# dictionnaire = dict()
+# wordfreq = dict()
+# listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à ceux les moins fréquents dans un dict()
+# listeDeMotsFrequents = []
 
+if args.m == 1:
+    j = 0
+    words = []
 
-if args.m is 1:
     for i in range(len(authors)):
-        listeDeDict.append(printDict(rep_aut + "\\" + authors[i], dictionnaire, wordfreq))
-        print("LONGEUR DE LA LISTE : ", len(listeDeDict))
-        
-    print(listeDeDict[0].pop(1))
-    print(listeDeDict[1].pop(1))
-    print(listeDeDict[2].pop(1))
+        liste = lireFichier(rep_aut + "\\" + authors[i], 1)
+        print(len(liste))
+        words = liste + words
+        j = j + 1
+    print(len(words))
+    print(modeUnigramme(words))
+
+
+
+# for i in range(len(authors)):
+#     lireFichier(rep_aut + "\\" + authors[i], 1)
+
+# for i in range(len(authors)):
+#     modeUnigramme(rep_aut + "\\" + authors[i], 1)

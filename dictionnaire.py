@@ -6,19 +6,7 @@ import os
 from pathlib import Path
 from random import randint
 from random import choice
-
-def ouvrirFichier(stringEntree):
-    Dict = {}
-    i = 0
-    for fil in os.listdir(stringEntree):
-        f = open(stringEntree + fil, 'r', encoding = "utf8")
-        for line in stringEntree:
-            for word in line.split():
-                Dict[i] = word
-                i = i + 1
-    f.close()
-    #print(Dict)
-    return Dict
+from pythonds import Graph
 
 def sortFreqDict(freqdict):
     aux = [(freqdict[key], key) for key in freqdict]
@@ -26,8 +14,24 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
+def lireFichier(stringEntree, enleverPONC):
+    
+    f = open(stringEntree, 'r', encoding = "utf8")
+    #print(f)
+    data = f.read()
+    words = data.split()
+    f.close()
+    
+    if enleverPONC is True:
+        # for raw_word in words:
+        #     words = raw_word.strip(PONC)
+        words = unwanted_chars(words)
+    
+    #print(words)
+    return words
+
 def unwanted_chars(liste):
-    PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_","—"]
+    PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_","—", "«"]
     RetourListe = []
     NewListe = liste.split()
     for word in NewListe:
@@ -38,57 +42,25 @@ def unwanted_chars(liste):
         word = word.rstrip()
     if len(word) > 2:
         RetourListe.append(word)
-    print(RetourListe)
+    #print(RetourListe)
     return RetourListe 
 
-def printDict(stringEntree, dictionnaire, wordfreq):
-    
-    i = 0
-    j = 0
+def modeUnigramme(words):
 
-    # f = open(stringEntree,'r', encoding="utf8")
-    # for line in f:
-    #     for word in line.split():
-    #         dictionnaire[i] = word
-    #         i = i + 1
-    # f.close()
+    dictionnaire = dict()
 
-    dictionnaire = ouvrirFichier(stringEntree)
-
-    totalfreq = len(dictionnaire)
-
-    print("Dictionnaire : ")    
-    print(len(dictionnaire)) 
-
-    f = open(stringEntree, 'r', encoding="utf8")
-    data = f.read()
-    words = data.split()
-    f.close()
-
-    unwanted_chars = "!)(,.;:?-_"
-    
-    for raw_word in words:
-        word = raw_word.strip(unwanted_chars)
-        if word not in wordfreq:
-            wordfreq[word] = 0 
-        wordfreq[word] += 1         # wordfreq[word] ++ (le mot donne la position) wordfreq['yo'] nous donne la frequence 6
-    
-    # pourcfreq = []
-
-    # for j in wordfreq:
-    #     pourcfreq = ((wordfreq['yo'] * 100 ) / totalfreq)       # trouver une facon de passer au prochain mot dans le dictionnaire
-    #     #j = j + 1
-    
-    # print(pourcfreq)
-    print("Frequence par mots : ")
-    print(len(sortFreqDict(wordfreq)))
-    return sortFreqDict(wordfreq)
-
-def Comparer(self, path, mode):
-
-    temp = []
-    f = open(path, 'r', encoding = ("utf8"))
-    for lines in f:
-        temp = self.unwanted_chars(lines)
-        #if mode == 2:
+    for word in words:
+        if word not in words:
+            words[word] = 0 
+        words[word] += 1
         
+    print("Frequence par mots : ")
+    print(len(sortFreqDict(words)))
+    for word in words.split():
+        dictionnaire[i] = sortFreqDict(word)
+        i = i + 1
+
+    return dictionnaire
+
+# def modeBigramme(dictionnaire):
+#     graphMots = Graph()
