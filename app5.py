@@ -74,7 +74,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', required=True, help='Repertoire contenant les sous-repertoires des auteurs')
     parser.add_argument('-a', help='Auteur a traiter')
     parser.add_argument('-f', help='Fichier inconnu a comparer')
-    parser.add_argument('-m', required=True, type=int, choices=range(1, 2),
+    parser.add_argument('-m', required=True, type=int, choices=range(1, 3),
                         help='Mode (1 ou 2) - unigrammes ou digrammes')
     parser.add_argument('-F', type=int, help='Indication du rang (en frequence) du mot (ou bigramme) a imprimer')
     parser.add_argument('-G', type=int, help='Taille du texte a generer')
@@ -100,6 +100,7 @@ if __name__ == "__main__":
     authors = os.listdir(rep_aut)
     
     print("Fichiers textes a analyser", authors)
+    
 
     ### Enlever les signes de ponctuation (ou non) - DÃ©finis dans la liste PONC
     if args.P:
@@ -147,6 +148,7 @@ dictionnaire = dict()
 wordfreq = dict()
 listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à ceux les moins fréquents dans un dict()
 listeDeMotsFrequents = []
+listeDeMots = []
 
 
 if args.m == 1:
@@ -162,3 +164,19 @@ if args.m == 1:
     print(listeDeDict[0].pop(1))
     print(listeDeDict[0].pop(1))
     print(listeDeDict[1].pop(1))
+    
+if args.m == 2:
+    j = 0
+    
+    for i in range(len(authors)):
+        listeDeMots = lireFichier(rep_aut + "\\" + authors[i], args.P, PONC)
+        print(len(listeDeMots))
+        
+        for i in range(len(listeDeMots)):
+                dictionnaire[j] = listeDeMots[i]
+                j = j+1
+                
+    print(len(dictionnaire))
+    
+    modeBigramme(dictionnaire)        
+        
