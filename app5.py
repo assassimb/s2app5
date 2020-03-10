@@ -59,7 +59,6 @@ from random import choice
 
 
 ### Ajouter ici les signes de ponctuation Ã  retirer
-PONC = "!')(.;:?-_"
 
 ###  Vous devriez inclure vos classes et mÃ©thodes ici, qui seront appellÃ©es Ã  partir du main
 
@@ -80,6 +79,7 @@ if __name__ == "__main__":
     parser.add_argument('-G', type=int, help='Taille du texte a generer')
     parser.add_argument('-g', help='Nom de base du fichier de texte a generer')
     parser.add_argument('-v', action='store_true', help='Mode verbose')
+    parser.add_argument('-V', help= 'Repertoire contenant les fichiers textes de validation')
     parser.add_argument('-P', action='store_true', help='Retirer la ponctuation')
     args = parser.parse_args()
 
@@ -89,15 +89,18 @@ if __name__ == "__main__":
     
     cwd = os.getcwd()
     rep_aut = os.path.join(cwd, args.d)
-    
+    rep_test = os.path.join(cwd, args.V)   
+     
     if os.path.isabs(args.a):
         rep_aut = args.a
     else:
         rep_aut = os.path.join(rep_aut, args.a)
-        
+            
     rep_aut = os.path.normpath(rep_aut)
-    
     authors = os.listdir(rep_aut)
+    
+    authorstest = os.path.join(rep_test, args.f)
+    authorstest = os.path.normpath(authorstest)
     
     print("Fichiers textes a analyser : ", authors)
     
@@ -140,8 +143,7 @@ if __name__ == "__main__":
 
 ### Ã€ partir d'ici, vous devriez inclure les appels Ã  votre code
 #
-# ligne de compilation a entrer dans vscode:  python .\app5.py -d .\TextesPourEtudiants -a Voltaire -m 1
-# on peut aussi changer le -a pour autre chose pi on s'en caliss du -d et -m live ils font rien dans le code
+# python .\app5.py -d .\TextesPourEtudiants\  -a Voltaire -m 1 -V .\TextesPourAutoValidation\ -f Balzac_ge╠üne╠üre╠ü.txt
 #
 
 dictionnaire = dict()
@@ -152,9 +154,10 @@ listeDeMots = []
 if args.m == 1:
     j = 0
     words = []
+    dictionnaire = {}
 
     for i in range(len(authors)): 
-        liste = lireFichier(rep_aut + "\\" + authors[i], args.P)
+        liste = lireFichier(rep_aut + "\\" + authors[i])
         
         print(len(liste))
         
@@ -162,7 +165,10 @@ if args.m == 1:
         j = j + 1
         
     print(len(words))
-    print(words)
+    
+    dictionnaire = modeUnigramme(words)
+    
+    comparaisonTexteUnigramme(dictionnaire, rep_test + "\\" + args.f)
 
     
     

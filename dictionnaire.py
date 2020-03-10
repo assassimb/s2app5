@@ -3,6 +3,7 @@ import argparse
 import glob
 import sys
 import os
+import pprint
 from pathlib import Path
 from random import randint
 from random import choice
@@ -15,15 +16,14 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
-def lireFichier(path, enleverPONC):
+def lireFichier(path):
     
     f = open(path, 'r', encoding="utf8")
     data = f.read()
     words = data.split()
     f.close()
-    
-    if enleverPONC is True:
-        data = unwanted_chars(data)
+
+    data = unwanted_chars(data)
             
     return words
 
@@ -44,7 +44,7 @@ def unwanted_chars(string):
 
 def modeUnigramme(words):
     wordfreq = {}
-    
+    occurence = 0
     for word in words:
         if word not in wordfreq:
             wordfreq[word] = 0 
@@ -56,17 +56,24 @@ def modeUnigramme(words):
 
 def modeBigramme(dictionnaire):
     
-    graphMots = Graph()    
+    graphMots = Graph(connections, directed = True)    
     
     for i in range(len(dictionnaire) - 1):
         if graphMots.getVertex(dictionnaire[i]) is False:
             graphMots.addVertex(dictionnaire[i])
-        graphMots.addEdge(str(dictionnaire[i]), str(dictionnaire[i+1]))
+        graphMots.addEdge((dictionnaire[i]), (dictionnaire[i+1]))
         
     print(graphMots.numVertices)
+    
     return graphMots
     
+def comparaisonTexteUnigramme(dictionnaire, path):
     
+    listeDeFreqUnitaire = []
+    
+    for key in dictionnaire:
+        listeDeFreqUnitaire.append(float(key[0])/100, key[1])
+        
 
         
         
