@@ -8,8 +8,6 @@ from random import randint
 from random import choice
 from pythonds import Graph
 
-
-
 def sortFreqDict(freqdict):
     
     aux = [(freqdict[key], key) for key in freqdict]
@@ -17,7 +15,7 @@ def sortFreqDict(freqdict):
     aux.reverse()
     return aux
 
-def lireFichier(path, enleverPONC, PONC):
+def lireFichier(path, enleverPONC):
     
     f = open(path, 'r', encoding="utf8")
     data = f.read()
@@ -25,13 +23,28 @@ def lireFichier(path, enleverPONC, PONC):
     f.close()
     
     if enleverPONC is True:
-        for raw_word in words:
-            words = raw_word.strip(PONC)
-        
+        data = unwanted_chars(data)
+            
     return words
 
-def modeUnigramme(words, dictionnaire, wordfreq):
+def unwanted_chars(string):
+    PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_","—", "«"]
+    RetourListe = []
+    NewListe = string.split()
+    for word in NewListe:
+        for signe in PONC:
+            word = word.replace(signe, " ")
+        word = word.replace("\n", " ")
+        word = word.lstrip()
+        word = word.rstrip()
+    if len(word) > 2:
+        RetourListe.append(word)
+    return RetourListe 
 
+
+def modeUnigramme(words):
+    wordfreq = {}
+    
     for word in words:
         if word not in wordfreq:
             wordfreq[word] = 0 

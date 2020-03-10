@@ -59,7 +59,7 @@ from random import choice
 
 
 ### Ajouter ici les signes de ponctuation Ã  retirer
-PONC = ["!", '"', "'", ")", "(", ",", ".", ";", ":", "?", "-", "_"]
+PONC = "!')(.;:?-_"
 
 ###  Vous devriez inclure vos classes et mÃ©thodes ici, qui seront appellÃ©es Ã  partir du main
 
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     
     authors = os.listdir(rep_aut)
     
-    print("Fichiers textes a analyser", authors)
+    print("Fichiers textes a analyser : ", authors)
     
 
     ### Enlever les signes de ponctuation (ou non) - DÃ©finis dans la liste PONC
@@ -145,31 +145,32 @@ if __name__ == "__main__":
 #
 
 dictionnaire = dict()
-wordfreq = dict()
 listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à ceux les moins fréquents dans un dict()
 listeDeMotsFrequents = []
 listeDeMots = []
 
-
 if args.m == 1:
-    for i in range(len(authors)):
+    j = 0
+    words = []
+
+    for i in range(len(authors)): 
+        liste = lireFichier(rep_aut + "\\" + authors[i], args.P)
         
-        listeDeDict.append(
-            modeUnigramme(
-                lireFichier(rep_aut + "\\" + authors[i], args.P, PONC),
-                            dictionnaire, wordfreq))
+        print(len(liste))
         
-        print("LONGEUR DE LA LISTE : ", len(listeDeDict))
+        words = liste + words
+        j = j + 1
         
-    print(listeDeDict[0].pop(1))
-    print(listeDeDict[0].pop(1))
-    print(listeDeDict[1].pop(1))
+    print(len(words))
+    print(words)
+
+    
     
 if args.m == 2:
     j = 0
     
     for i in range(len(authors)):
-        listeDeMots = lireFichier(rep_aut + "\\" + authors[i], args.P, PONC)
+        listeDeMots = lireFichier(rep_aut + "\\" + authors[i], args.P)
         print(len(listeDeMots))
         
         for i in range(len(listeDeMots)):
