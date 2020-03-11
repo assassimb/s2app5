@@ -72,6 +72,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='markov_cip1_cip2.py')
     parser.add_argument('-d', required=True, help='Repertoire contenant les sous-repertoires des auteurs')
     parser.add_argument('-a', help='Auteur a traiter')
+    parser.add_argument('-A', action='store_true', help='Traiter tous les auteurs')
     parser.add_argument('-f', help='Fichier inconnu a comparer')
     parser.add_argument('-m', required=True, type=int, choices=range(1, 3),
                         help='Mode (1 ou 2) - unigrammes ou digrammes')
@@ -90,14 +91,21 @@ if __name__ == "__main__":
     cwd = os.getcwd()
     rep_aut = os.path.join(cwd, args.d)
     rep_test = os.path.join(cwd, args.V)   
-     
-    if os.path.isabs(args.a):
-        rep_aut = args.a
-    else:
-        rep_aut = os.path.join(rep_aut, args.a)
+    if args.A is False:
+        if os.path.isabs(args.a):
+            rep_aut = args.a
+        else:
+            rep_aut = os.path.join(rep_aut, args.a)
             
     rep_aut = os.path.normpath(rep_aut)
-    authors = os.listdir(rep_aut)
+    
+    if args.A is True:
+        dossiertexte = os.listdir(rep_aut)
+        authors = os.path.join(rep_aut, dossiertexte[0])
+        textes = os.listdir(authors)
+    
+    if args.A is False:
+        authors = os.listdir(rep_aut)
     
     authorstest = os.path.join(rep_test, args.f)
     authorstest = os.path.normpath(authorstest)
@@ -147,28 +155,24 @@ if __name__ == "__main__":
 #
 
 dictionnaire = dict()
-listeDeDict = [] # les fichiers textes en ordre des mots les plus fréquents à ceux les moins fréquents dans un dict()
-listeDeMotsFrequents = []
-listeDeMots = []
+
 
 if args.m == 1:
     j = 0
     words = []
-    dictionnaire = {}
-
+    
     for i in range(len(authors)): 
+        print("Lecture du fichier : (", i+1,"/",len(authors),")")
         liste = lireFichier(rep_aut + "\\" + authors[i])
-        
-        print(len(liste))
-        
         words = liste + words
         j = j + 1
         
-    print(len(words))
     
-    dictionnaire = modeUnigramme(words)
-    
-    comparaisonTexteUnigramme(dictionnaire, rep_test + "\\" + args.f)
+    words = modeUnigramme(words)
+   
+    print("La fréquence pour l'auteur (",str(args.a).upper(), ") est : ")
+    print(comparaisonTexteUnigramme(words, rep_test + "\\" + args.f))    
+
 
     
     
@@ -176,14 +180,15 @@ if args.m == 2:
     j = 0
     
     for i in range(len(authors)):
-        listeDeMots = lireFichier(rep_aut + "\\" + authors[i], args.P)
-        print(len(listeDeMots))
-        
-        for i in range(len(listeDeMots)):
-                dictionnaire[j] = listeDeMots[i]
-                j = j+1
+        print("Lecture du fichier : (", i+1,"/",len(authors),")")
+        liste = lireFichier(rep_aut + "\\" + authors[i])
+        for i in range(len(liste)):
+            dictionnaire[j] = liste[i]
+            j = j+1
                 
-    print(len(dictionnaire))
     
-    modeBigramme(dictionnaire)        
+    words = modeBigramme(dictionnaire)
+    
+    print("La fréquence pour l'auteur (",str(args.a).upper(),") pour le fichier", str(args.f).upper(),"est : ")
+    print(comparaisonTexteBigramme(words, rep_test + "\\" + args.f))    
         
